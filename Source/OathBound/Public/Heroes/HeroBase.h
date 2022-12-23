@@ -36,18 +36,36 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UCameraComponent* CameraComponent;
 
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-	USkeletalMeshComponent* HairComponent;
+	// Character Customization
+	//UPROPERTY(VisibleAnywhere, Category = "Character | Customization")
+	//bool bIsMale;
+	//UPROPERTY(VisibleAnywhere, Category = "Character | Customization")
+	//bool bIsFemale;
 
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-	USkeletalMeshComponent* EyeBrowComponent;
+	UPROPERTY(VisibleAnywhere, Category = "Character | Customization")
+	USkeletalMeshComponent* Hair;
+	UPROPERTY(VisibleAnywhere, Category = "Character | Customization")
+	USkeletalMeshComponent* Eyebrows;
+	UPROPERTY(VisibleAnywhere, Category = "Character | Customization")
+	USkeletalMeshComponent* Beard;
 
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-	USkeletalMeshComponent* BeardComponent;
-
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-	USkeletalMeshComponent* BeltComponent;
-
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-	USkeletalMeshComponent* BootsComponent;
+	//Equipment
+	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
+	USkeletalMeshComponent*	Bracers;
+	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
+	USkeletalMeshComponent* Belt;
+	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
+	USkeletalMeshComponent* Boots;
+	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
+	USkeletalMeshComponent* Cape;
+	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
+	USkeletalMeshComponent* Chest;
+	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
+	USkeletalMeshComponent* Hands;
+	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
+	USkeletalMeshComponent*	Helm;
+	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
+	USkeletalMeshComponent*	Legs;
+	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
+	USkeletalMeshComponent* Shoulders;
 };
