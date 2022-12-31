@@ -28,7 +28,7 @@ enum class EEquipmentRarity : uint8
 };
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class OATHBOUND_API UEquipmentBase : public UActorComponent
 {
 	GENERATED_BODY()
@@ -43,15 +43,20 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	// Equipment Properties
+	UPROPERTY(EditDefaultsOnly, Category = "Equipment")
+	uint16 ID;
 	UPROPERTY(VisibleAnywhere, Category = "Equipment")
 	FString Name;
+	UPROPERTY(VisibleAnywhere, Category = "Equipment")
+	FString Description;
 	UPROPERTY(VisibleAnywhere, Category = "Equipment")
 	USkeletalMesh* EquipmentMesh;
 	UPROPERTY(VisibleAnywhere, Category = "Equipment")
 	USoundCue* EquipSound;
-	UPROPERTY(VisibleAnywhere, Category = "Equipment")
+	UPROPERTY(VisibleAnywhere, Category = "Equipment | SFX")
 	USoundCue* UnequipSound;
-	UPROPERTY(VisibleAnywhere, Category = "Equipment")
+	UPROPERTY(VisibleAnywhere, Category = "Equipment | SFX")
 	float EquipmentLevelRequirement;
 
 	UPROPERTY(VisibleAnywhere, Category = "Equipment | Equipment Type")

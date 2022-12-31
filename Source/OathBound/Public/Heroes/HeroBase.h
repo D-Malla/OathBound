@@ -4,9 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "InputActionValue.h"
 #include "HeroBase.generated.h"
 
 class UCameraComponent;
+class UInputAction;
+class UInputMappingContext;
 class USpringArmComponent;
 
 UCLASS()
@@ -30,42 +33,26 @@ protected:
 
 private:
 	// Components
-	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UPROPERTY(VisibleAnywhere, Category = "Hero | Components")
 	USpringArmComponent* SpringArmComponent;
 
-	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UPROPERTY(VisibleAnywhere, Category = "Hero | Components")
 	UCameraComponent* CameraComponent;
 
-	// Character Customization
-	//UPROPERTY(VisibleAnywhere, Category = "Character | Customization")
-	//bool bIsMale;
-	//UPROPERTY(VisibleAnywhere, Category = "Character | Customization")
-	//bool bIsFemale;
+	// Input
+	UPROPERTY(EditAnywhere, Category = "Hero | Input")
+	UInputMappingContext* HeroContext;
 
-	UPROPERTY(VisibleAnywhere, Category = "Character | Customization")
-	USkeletalMeshComponent* Hair;
-	UPROPERTY(VisibleAnywhere, Category = "Character | Customization")
-	USkeletalMeshComponent* Eyebrows;
-	UPROPERTY(VisibleAnywhere, Category = "Character | Customization")
-	USkeletalMeshComponent* Beard;
+	UPROPERTY(EditAnywhere, Category = "Hero | Input")
+	UInputAction* MovementAction;
 
-	//Equipment
-	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
-	USkeletalMeshComponent*	Bracers;
-	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
-	USkeletalMeshComponent* Belt;
-	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
-	USkeletalMeshComponent* Boots;
-	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
-	USkeletalMeshComponent* Cape;
-	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
-	USkeletalMeshComponent* Chest;
-	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
-	USkeletalMeshComponent* Hands;
-	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
-	USkeletalMeshComponent*	Helm;
-	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
-	USkeletalMeshComponent*	Legs;
-	UPROPERTY(VisibleAnywhere, Category = "Character | Equipment")
-	USkeletalMeshComponent* Shoulders;
+	UPROPERTY(EditAnywhere, Category = "Hero | Input")
+	UInputAction* LookAction;
+
+	UPROPERTY(EditAnywhere, Category = "Hero | Input")
+	UInputAction* JumpAction;
+
+	void Move(const FInputActionValue& Value);
+	void Look(const FInputActionValue& Value);
+	virtual void Jump() override;
 };
