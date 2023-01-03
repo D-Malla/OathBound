@@ -20,8 +20,8 @@ enum class EEquipmentType : uint8
 UENUM(BlueprintType)
 enum class EEquipmentRarity : uint8
 {
-	EER_Common		UMETA(DisplayName = "Uncommon"),
-	EER_UnCommon	UMETA(DisplayName = "Common"),
+	EER_Common		UMETA(DisplayName = "Common"),
+	EER_Uncommon	UMETA(DisplayName = "Uncommon"),
 	EER_Rare			UMETA(DisplayName = "Rare"),
 	EER_Epic			UMETA(DisplayName = "Epic"),
 	EER_Legendary	UMETA(DisplayName = "Legendary")
@@ -64,6 +64,4 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Equipment | Stats")
 	EEquipmentRarity Rarity;
-
-
 };
