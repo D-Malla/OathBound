@@ -31,6 +31,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UFUNCTION(BlueprintCallable)
+	void Damage(float DamageAmount);
+	UFUNCTION(BlueprintCallable)
+	void Heal(float HealAmount);
+
 private:
 	// Components
 	UPROPERTY(VisibleAnywhere, Category = "Hero | Components")
@@ -55,4 +60,16 @@ private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	virtual void Jump() override;
+
+	// Stats
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Hero | Stats", meta = (AllowPrivateAccess = "true"))
+	float MaxHealth;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Hero | Stats", meta = (AllowPrivateAccess = "true"))
+	float Health;
+
+public:
+	// Getter Functions
+	FORCEINLINE float GetMaxHealth() { return MaxHealth; }
+	FORCEINLINE float GetHealth() { return Health; }
 };

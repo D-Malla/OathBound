@@ -28,6 +28,10 @@ AHeroBase::AHeroBase()
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
+
+	// Stats
+	MaxHealth = 100.f;
+	Health = MaxHealth;
 }
 
 // Called when the game starts or when spawned
@@ -102,3 +106,43 @@ void AHeroBase::Jump()
 	Super::Jump();
 }
 
+// Health/Damage
+void AHeroBase::Damage(float DamageAmount)
+{
+	Health -= DamageAmount;
+
+	if (Health <=0.f)
+	{
+		Health = 0.f;
+
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Player Died")));
+		}
+	}
+
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Player Health: %f"), Health));
+	}
+}
+
+void AHeroBase::Heal(float HealAmount)
+{
+	Health += HealAmount;
+
+	if (Health >= MaxHealth)
+	{
+		Health = MaxHealth;
+
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Player Fully Healed!")));
+		}
+	}
+
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Player Health: %f"), Health));
+	}
+}
