@@ -11,9 +11,10 @@ class USoundCue;
 UENUM(BlueprintType)
 enum class EEquipmentType : uint8
 {
-	EET_Armor			UMETA(DisplayName = "Armor"),
-	EET_Shield		UMETA(DisplayName = "Shield"),
-	EET_Weapon		UMETA(DisplayName = "Weapon"),
+	EET_Blade			UMETA(DisplayName = "Blade"),
+	EET_Bomb			UMETA(DisplayName = "Bomb"),
+	EET_Clothing	UMETA(DisplayName = "Clothing"),
+	EET_Gun				UMETA(DisplayName = "Gun"),
 	EET_NONE			UMETA(DisplayName = "NONE")
 };
 

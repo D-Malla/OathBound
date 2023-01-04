@@ -62,6 +62,7 @@ void AMainPlayer::BeginPlay()
 			Subsystem->AddMappingContext(MainPlayerContext, 0);
 		}
 	}
+
 }
 
 // Called every frame
