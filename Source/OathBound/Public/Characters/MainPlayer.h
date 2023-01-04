@@ -1,0 +1,90 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Character.h"
+#include "InputActionValue.h"
+#include "MainPlayer.generated.h"
+ 
+class UCameraComponent;
+class UInputAction;
+class UInputMappingContext;
+class USpringArmComponent;
+
+
+UCLASS()
+class OATHBOUND_API AMainPlayer : public ACharacter
+{
+	GENERATED_BODY()
+
+public:
+	// Sets default values for this character's properties
+	AMainPlayer();
+
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+	UFUNCTION(BlueprintCallable)
+		void Damage(float DamageAmount);
+	UFUNCTION(BlueprintCallable)
+		void Heal(float HealAmount);
+
+private:
+	// Core Components
+	UPROPERTY(VisibleAnywhere, Category = "Main | Components")
+		USpringArmComponent* SpringArmComponent;
+
+	UPROPERTY(VisibleAnywhere, Category = "Main | Components")
+		UCameraComponent* CameraComponent;
+
+	// Weapon Components
+	UPROPERTY(EditDefaultsOnly, Category = "Main | Weapons")
+	USkeletalMeshComponent* PrimarySwordComponent;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Main | Weapons")
+	USkeletalMeshComponent* PrimaryPistolComponent;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Main | Weapons")
+	USkeletalMeshComponent* SecondaryWeaponComponent; // This can be another off-hand pistol or knife. 1 quick use to save the player's ass.
+
+	UPROPERTY(EditDefaultsOnly, Category = "Main | Weapons")
+	USkeletalMeshComponent* BombWeaponComponent;
+
+	// Input
+	UPROPERTY(EditAnywhere, Category = "Main | Input")
+		UInputMappingContext* MainPlayerContext;
+
+	UPROPERTY(EditAnywhere, Category = "Main | Input")
+		UInputAction* MovementAction;
+
+	UPROPERTY(EditAnywhere, Category = "Main | Input")
+		UInputAction* LookAction;
+
+	UPROPERTY(EditAnywhere, Category = "Main | Input")
+		UInputAction* JumpAction;
+
+	// Input Callback Functions
+	void Move(const FInputActionValue& Value);
+	void Look(const FInputActionValue& Value);
+	virtual void Jump() override;
+
+	// Stats
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Main | Stats", meta = (AllowPrivateAccess = "true"))
+		float MaxHealth;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Main | Stats", meta = (AllowPrivateAccess = "true"))
+		float Health;
+
+public:
+	// Getter Functions
+	FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
+	FORCEINLINE float GetHealth() const { return Health; }
+};
