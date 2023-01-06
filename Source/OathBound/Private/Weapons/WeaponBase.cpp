@@ -36,6 +36,14 @@ void AWeaponBase::BeginPlay()
 	
 }
 
+void AWeaponBase::EquipWeapon(AActor* EquippingActor)
+{
+}
+
+void AWeaponBase::UnEquipWeapon(AActor* EquippingActor)
+{
+}
+
 // Called every frame
 void AWeaponBase::Tick(float DeltaTime)
 {

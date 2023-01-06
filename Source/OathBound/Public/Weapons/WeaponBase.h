@@ -14,7 +14,7 @@ UENUM()
 enum class EWeaponType
 {
 	EWT_Blade				UMETA(DisplayName = "Blade"),
-	EWT_Bomb				UMETA(DisplayName = "Bomb"),
+	EWT_Explosive		UMETA(DisplayName = "Explosive"),
 	EWT_Gun					UMETA(DisplayName = "Gun"),
 	EWT_DEFAULTMAX	UMETA(DisplayName = "DefaultMax")
 };
@@ -34,6 +34,9 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	void EquipWeapon(AActor* EquippingActor);
+	void UnEquipWeapon(AActor* EquippingActor);
 
 private:
 	// Weapon Core Components
@@ -63,4 +66,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon | Base")
 	TSubclassOf<UTexture2D> WeaponIcon;
+
+public:
+	FORCEINLINE FString GetWeaponName() { return Name; }
+	FORCEINLINE FString GetWeaponID() { return ID; }
+	FORCEINLINE EWeaponType GetWeaponType() { return WeaponType; }
 };
