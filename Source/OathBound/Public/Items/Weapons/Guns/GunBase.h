@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Weapons/WeaponBase.h"
+#include "Items/Weapons/WeaponBase.h"
 #include "GunBase.generated.h"
 
 /**

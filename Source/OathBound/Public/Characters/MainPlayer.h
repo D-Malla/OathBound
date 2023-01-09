@@ -33,17 +33,17 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable)
-		void Damage(float DamageAmount);
+	void Damage(float DamageAmount);
 	UFUNCTION(BlueprintCallable)
-		void Heal(float HealAmount);
+	void Heal(float HealAmount);
 
 private:
 	// Core Components
 	UPROPERTY(VisibleAnywhere, Category = "Main | Components")
-		USpringArmComponent* SpringArmComponent;
+	USpringArmComponent* SpringArmComponent;
 
 	UPROPERTY(VisibleAnywhere, Category = "Main | Components")
-		UCameraComponent* CameraComponent;
+	UCameraComponent* CameraComponent;
 
 	// Weapon Components
 	UPROPERTY(EditDefaultsOnly, Category = "Main | Weapons")

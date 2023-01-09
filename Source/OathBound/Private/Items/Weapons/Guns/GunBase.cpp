@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Weapons/Guns/GunBase.h"
+#include "Items/Weapons/Guns/GunBase.h"
 
 AGunBase::AGunBase()
 {

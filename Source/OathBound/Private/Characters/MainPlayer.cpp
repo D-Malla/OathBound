@@ -3,10 +3,12 @@
 #include "Characters/MainPlayer.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
+#include "Engine/SkeletalMeshSocket.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Items/Weapons/Blades/BladeBase.h"
 
 // Sets default values
 AMainPlayer::AMainPlayer()
@@ -62,7 +64,6 @@ void AMainPlayer::BeginPlay()
 			Subsystem->AddMappingContext(MainPlayerContext, 0);
 		}
 	}
-
 }
 
 // Called every frame

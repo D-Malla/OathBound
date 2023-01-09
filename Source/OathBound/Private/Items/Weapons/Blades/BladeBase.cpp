@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Weapons/Blades/BladeBase.h"
+#include "Items/Weapons/Blades/BladeBase.h"
 
 ABladeBase::ABladeBase()
 {
