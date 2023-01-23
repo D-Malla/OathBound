@@ -5,8 +5,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "Interfaces/PickupInterface.h"
 #include "MainPlayer.generated.h"
  
+class ABladeBase;
+class AItemBase;
+class AWeaponBase;
 class UCameraComponent;
 class UInputAction;
 class UInputMappingContext;
@@ -14,7 +18,7 @@ class USpringArmComponent;
 
 
 UCLASS()
-class OATHBOUND_API AMainPlayer : public ACharacter
+class OATHBOUND_API AMainPlayer : public ACharacter, public IPickupInterface
 {
 	GENERATED_BODY()
 
@@ -28,6 +32,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	// PickupInterface functionality
+	virtual void SetOverlappingItem(AItemBase* Item) override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -38,27 +45,27 @@ protected:
 	void Heal(float HealAmount);
 
 private:
-	// Core Components
+	/* Core Components */
 	UPROPERTY(VisibleAnywhere, Category = "Main | Components")
 	USpringArmComponent* SpringArmComponent;
 
 	UPROPERTY(VisibleAnywhere, Category = "Main | Components")
 	UCameraComponent* CameraComponent;
 
-	// Weapon Components
+	/* Weapon Components */
 	UPROPERTY(EditDefaultsOnly, Category = "Main | Weapons")
 	USkeletalMeshComponent* PrimarySwordComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Main | Weapons")
 	USkeletalMeshComponent* PrimaryPistolComponent;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Main | Weapons")
-	USkeletalMeshComponent* SecondaryWeaponComponent; // This can be another off-hand pistol or knife. 1 quick use to save the player's ass.
+	//UPROPERTY(EditDefaultsOnly, Category = "Main | Weapons")
+	//USkeletalMeshComponent* SecondaryWeaponComponent; // This can be another off-hand pistol or knife. 1 quick use to save the player's ass.
 
-	UPROPERTY(EditDefaultsOnly, Category = "Main | Weapons")
-	USkeletalMeshComponent* BombWeaponComponent;
+	//UPROPERTY(EditDefaultsOnly, Category = "Main | Weapons")
+	//USkeletalMeshComponent* BombWeaponComponent;
 
-	// Input
+	/* Input */
 	UPROPERTY(EditAnywhere, Category = "Main | Input")
 		UInputMappingContext* MainPlayerContext;
 
@@ -71,20 +78,30 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Main | Input")
 		UInputAction* JumpAction;
 
-	// Input Callback Functions
+	UPROPERTY(EditAnywhere, Category = "Main | Input")
+	UInputAction* PickupAction;
+
+	/*  Input Callback Functions */
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	virtual void Jump() override;
+	void EKeyPressed();
 
-	// Stats
+	/* Stats */ 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Main | Stats", meta = (AllowPrivateAccess = "true"))
 		float MaxHealth;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Main | Stats", meta = (AllowPrivateAccess = "true"))
 		float Health;
 
+	/* Combat */
+	
+	/* Pickup */
+	UPROPERTY(VisibleInstanceOnly)
+	AItemBase* OverlappingItem;
+
 public:
-	// Getter Functions
+	/* Getter Functions */
 	FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
 	FORCEINLINE float GetHealth() const { return Health; }
 };

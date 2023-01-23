@@ -8,6 +8,7 @@
 
 class UBoxComponent;
 class USoundCue;
+class USphereComponent;
 class UTexture2D;
 
 UCLASS()
@@ -26,13 +27,20 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// When Item SphereComponents radius is overlapped
+	UFUNCTION()
+	void OnRadiusSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnRadiusSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Item | Base")
-	UBoxComponent* ItemCollision;
+	UStaticMeshComponent* ItemMesh;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Item | Base")
-	UStaticMeshComponent* ItemMesh;
+	USphereComponent* PickupRadius;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Item | Base")
 	FString Name;
@@ -43,8 +51,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Item | Base")
 	USoundCue* ItemPickupSound;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Item | Base")
-	USoundCue* ItemDropSound;
+	//UPROPERTY(EditDefaultsOnly, Category = "Item | Base")
+	//USoundCue* ItemDropSound;
 public:
 	FORCEINLINE UStaticMeshComponent* GetItemMesh() { return ItemMesh; }
 	FORCEINLINE FString GetItemName() { return Name; }

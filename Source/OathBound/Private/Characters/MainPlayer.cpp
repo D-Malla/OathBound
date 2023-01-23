@@ -8,6 +8,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Interfaces/PickupInterface.h"
 #include "Items/Weapons/Blades/BladeBase.h"
 
 // Sets default values
@@ -39,12 +40,6 @@ AMainPlayer::AMainPlayer()
 
 	PrimaryPistolComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("PrimaryPistolComponent"));
 	PrimaryPistolComponent->SetupAttachment(MainPlayerMesh);
-
-	SecondaryWeaponComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SecondaryWeaponComponent"));
-	SecondaryWeaponComponent->SetupAttachment(MainPlayerMesh);
-
-	BombWeaponComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("BombWeaponComponent"));
-	BombWeaponComponent->SetupAttachment(MainPlayerMesh);
 
 	// Stats
 	MaxHealth = 100.f;
@@ -87,8 +82,16 @@ void AMainPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 		// Jumping
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AMainPlayer::Jump);
+
+		// Item Pickup
+		EnhancedInputComponent->BindAction(PickupAction, ETriggerEvent::Triggered,this, &AMainPlayer::EKeyPressed);
 	}
 
+}
+
+void AMainPlayer::SetOverlappingItem(AItemBase* Item)
+{
+	OverlappingItem = Item;
 }
 
 void AMainPlayer::Move(const FInputActionValue& Value)
@@ -121,6 +124,26 @@ void AMainPlayer::Look(const FInputActionValue& Value)
 void AMainPlayer::Jump()
 {
 	Super::Jump();
+}
+
+void AMainPlayer::EKeyPressed()
+{
+
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1,
+		10.f,
+		FColor::Green,
+		FString(TEXT("E KEY PRESSED")));
+	}
+
+	ABladeBase* OverlappingWeapon = Cast<ABladeBase>(OverlappingItem);
+
+	if (OverlappingWeapon)
+	{
+		OverlappingWeapon->GetItemMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		OverlappingWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), FName("Weapon_RSocket"));
+	}
 }
 
 // Health/Damage

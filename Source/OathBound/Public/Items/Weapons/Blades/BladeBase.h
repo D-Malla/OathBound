@@ -6,9 +6,6 @@
 #include "Items/Weapons/WeaponBase.h"
 #include "BladeBase.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class OATHBOUND_API ABladeBase : public AWeaponBase
 {
@@ -18,6 +15,9 @@ public:
 	ABladeBase();
 
 private:
+
+	UPROPERTY(EditDefaultsOnly, Category = "Blade | Base")
+	UBoxComponent* BladeCollision;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Blade | Base")
 	float AttackSpeed;

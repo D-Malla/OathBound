@@ -7,6 +7,8 @@
 #include "Items/ItemBase.h"
 #include "WeaponBase.generated.h"
 
+class USphereComponent;
+
 UENUM()
 enum class EWeaponType
 {
@@ -34,7 +36,6 @@ protected:
 
 private:
 	// Weapon Core Components
-
 	UPROPERTY(EditDefaultsOnly, Category = "Item | Weapon | Base")
 	float DamageAmount;
 
