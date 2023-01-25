@@ -2,6 +2,7 @@
 
 
 #include "Items/ItemBase.h"
+#include "Characters/MainPlayer.h"
 #include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
 #include "Interfaces/PickupInterface.h"
@@ -32,7 +33,7 @@ void AItemBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	// Binding radius overlap delegates
+	// Binding item pickup radius overlap delegates
 	PickupRadius->OnComponentBeginOverlap.AddDynamic(this, &AItemBase::OnRadiusSphereBeginOverlap);
 	PickupRadius->OnComponentEndOverlap.AddDynamic(this, &AItemBase::OnRadiusSphereEndOverlap);
 }
@@ -44,10 +45,11 @@ void AItemBase::OnRadiusSphereBeginOverlap(UPrimitiveComponent* OverlappedCompon
 		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Green, FString(TEXT("Item Overlapped!!!!!!!")));
 	}
 	
-	IPickupInterface* PickupInterface = Cast<IPickupInterface>(OtherActor);
+	 //Casts to MainPlayer PickupInterface so we can access it's interface functionality. TODO: Will be casted to any Character (MainPlayer, NPC, etc.)
+		IPickupInterface* PickupInterface = Cast<IPickupInterface>(OtherActor);
 		if (PickupInterface)
 		{
-			PickupInterface->SetOverlappingItem(this);
+			PickupInterface->SetOverlappingItem(this); // Once Radius is overlapped, we connect to MainPlayer's PickupInterface and set the item being overlapped by MainPlayer. TODO: This will work with Enemy NPCs that will pickup weapons if they don't currently have one equipped.
 		}
 }
 

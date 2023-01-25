@@ -27,10 +27,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// When Item SphereComponents radius is overlapped
+	// When PickupRadius sphere component is overlapped
 	UFUNCTION()
 	void OnRadiusSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	// When PickupRadius sphere component stops overlapping
 	UFUNCTION()
 	void OnRadiusSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 

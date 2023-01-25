@@ -10,6 +10,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Interfaces/PickupInterface.h"
 #include "Items/Weapons/Blades/BladeBase.h"
+#include "Items/Weapons/Guns/GunBase.h"
+#include "Items/Weapons/Explosives/ExplosiveBase.h"
 
 // Sets default values
 AMainPlayer::AMainPlayer()
@@ -26,7 +28,7 @@ AMainPlayer::AMainPlayer()
 
 	USkeletalMeshComponent* MainPlayerMesh = GetMesh();
 
-	// Core Components
+	/* Core Components */
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
 	SpringArmComponent->SetupAttachment(GetRootComponent());
 	SpringArmComponent->bUsePawnControlRotation = true;
@@ -34,14 +36,17 @@ AMainPlayer::AMainPlayer()
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
 
-	// Weapon Components
+	/* Weapon Components */
 	PrimarySwordComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("PrimarySwordComponent"));
 	PrimarySwordComponent->SetupAttachment(MainPlayerMesh);
 
 	PrimaryPistolComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("PrimaryPistolComponent"));
 	PrimaryPistolComponent->SetupAttachment(MainPlayerMesh);
 
-	// Stats
+	/* States */
+	EquippedWeapon = EEquippedWeapon::EEW_UNEQUIPPED;
+
+	/* Stats */
 	MaxHealth = 100.f;
 	Health = MaxHealth;
 }
@@ -137,12 +142,26 @@ void AMainPlayer::EKeyPressed()
 		FString(TEXT("E KEY PRESSED")));
 	}
 
-	ABladeBase* OverlappingWeapon = Cast<ABladeBase>(OverlappingItem);
-
-	if (OverlappingWeapon)
+	// Checks each type of weapon archetype being overlapped.
+	// TODO: Create different sockets for each weapon archetype to hold enequipped (hips, back, etc.); Refactor code so that each Weapon Archetype will be casted/sorted through a function; Figure out how to cast lower-level weapons without all the casts(cutlass/flintlock/etc.)
+	if (ABladeBase* OverlappingBlade = Cast<ABladeBase>(OverlappingItem))
 	{
-		OverlappingWeapon->GetItemMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		OverlappingWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), FName("Weapon_RSocket"));
+		OverlappingBlade->GetItemMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		OverlappingBlade->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), FName("Weapon_RSocket"));
+	}
+	else if (AGunBase* OverlappingGun = Cast<AGunBase>(OverlappingItem))
+	{
+		OverlappingGun->GetItemMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		OverlappingGun->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), FName("Weapon_RSocket"));
+	}
+	else if (AExplosiveBase* OverlappingExplosive = Cast<AExplosiveBase>(OverlappingItem))
+	{
+		OverlappingExplosive->GetItemMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		OverlappingExplosive->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), FName("Weapon_RSocket"));
+	}
+	else 
+	{
+		return;
 	}
 }
 

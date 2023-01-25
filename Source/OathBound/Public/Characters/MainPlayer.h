@@ -16,6 +16,16 @@ class UInputAction;
 class UInputMappingContext;
 class USpringArmComponent;
 
+UENUM()
+enum class EEquippedWeapon
+{
+	EEW_UNEQUIPPED				UMETA(DisplayName = "Unequipped"),
+	EEW_BLADEEQUIPPED			UMETA(DisplayName = "BladeEquipped"),
+	EEW_GUNEQUIPPED				UMETA(DisplayName = "GunEquipped"),
+	EEW_EXPLOSIVEEQUIPPED UMETA(DisplayName = "ExplosiveEquipped"),
+	EEW_DEFAULTMAX				UMETA(DisplayName = "DefaultMax")
+};
+
 
 UCLASS()
 class OATHBOUND_API AMainPlayer : public ACharacter, public IPickupInterface
@@ -51,6 +61,10 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Main | Components")
 	UCameraComponent* CameraComponent;
+
+	/* States */
+	UPROPERTY(VisibleAnywhere, Category = "Main | States")
+	EEquippedWeapon EquippedWeapon;
 
 	/* Weapon Components */
 	UPROPERTY(EditDefaultsOnly, Category = "Main | Weapons")
@@ -100,8 +114,11 @@ private:
 	UPROPERTY(VisibleInstanceOnly)
 	AItemBase* OverlappingItem;
 
+	
+
 public:
 	/* Getter Functions */
 	FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
 	FORCEINLINE float GetHealth() const { return Health; }
+	FORCEINLINE EEquippedWeapon SetEquippedWeapon(EEquippedWeapon WeaponEquippedState) { EquippedWeapon = WeaponEquippedState; }
 };
